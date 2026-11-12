@@ -1,0 +1,12 @@
+{
+  "name": "drop-ihz",
+  "private": true,
+  "description": "Meeting server and phone page for ihz.land paired phone drop. No dependencies.",
+  "license": "MIT",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node drop-server.mjs --port 8797",
+    "test": "node --test test/*.test.mjs"
+  }
+}

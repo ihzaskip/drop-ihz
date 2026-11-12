@@ -1,0 +1,25 @@
+# Render Blueprint: one free web service at drop.ihz.app.
+# The build runs the tests, so a red test never reaches the phone.
+services:
+  - type: web
+    name: drop-ihz
+    runtime: node
+    plan: free
+    region: singapore
+    branch: main
+    buildCommand: npm test
+    # Render sits behind Cloudflare, so CF-Connecting-IP is the phone's real
+    # address (--trust-proxy gives each phone its own rate limit).
+    startCommand: node drop-server.mjs --host 0.0.0.0 --port $PORT --trust-proxy
+    healthCheckPath: /api/health
+    autoDeploy: true
+    domains:
+      - drop.ihz.app
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      # Optional relay (Cloudflare Realtime TURN). Left empty: STUN only.
+      - key: TURN_KEY_ID
+        sync: false
+      - key: TURN_KEY_API_TOKEN
+        sync: false
